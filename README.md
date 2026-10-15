@@ -13,6 +13,7 @@ Interactive WebGPU demos built with [vgpu](https://vgpu.sh/docs) — a typed, ag
 | 3 | **Video — backlight** | A video plays on a "TV" on a dark wall while an ambient backlight (like LED strips behind a TV) spills the frame's edge colours onto the wall, smoothed over time. | multi-pass `effect` chain, ping-pong `target`s |
 | 4 | **Scroll — depth parallax** | Scrolling flies the camera through a corridor of photos, graphics and headlines at different depths. Effect variants: Clean, Cinematic (depth of field + fog), Speed (zoom blur), Glitch, Print (brand halftone) — scroll-speed reactive. | instanced card `draw`s with premultiplied blending, offscreen `target` + post-processing `effect` |
 | 5 | **Button — liquid hover** | Hovering a card shows a button as a tooltip pinned to the cursor. The button keeps its rounded-rectangle shape while a pink energy wave sweeps across it and spills beyond it, leaving the white fill and label behind with a soft yellow glow at the seam; on leave the wave runs back. Manual progress slider, duration, glow and wobble controls. | `effect` on a transparent canvas, `@vgpu/wgsl-std/noise/simplex` |
+| 6 | **Photo — glow reveal** | A photo rises into view from the bottom behind a lumpy, uneven front: columns travel at different speeds, the edge flares sideways, a lime band trails just below the front and a soft white halo glows above it. Hiding plays it backwards. Toggle or manual mode, progress, duration, glow and wobble controls. | `effect` with an SDF mask on a transparent canvas, `@vgpu/wgsl-std/noise/simplex` (fBm) |
 
 A small performance overlay (FPS, frame time, heap, GPU) sits in the bottom-right corner.
 
@@ -50,6 +51,7 @@ src/
     video-led/             3 · video with ambient backlight
     scroll-depth/          4 · scroll-driven depth parallax with effect variants
     button-hover/          5 · cursor tooltip button with an energy-wave reveal
+    photo-reveal/          6 · photo reveal with a lime band and glowing front
 vite.config.ts             @vgpu/wgsl Vite plugin (compiles .wgsl imports at build time)
 ```
 
@@ -77,4 +79,4 @@ npx vgpu examples search "<topic>"
 
 ## Assets
 
-The 3D graphics come from the embedded PNGs of the provided SVG files (`public/heart.png`, `public/shape-*.png`). Example 3 uses `public/ignite-phone.mp4`. Photos in examples 1 and 4 are loaded from [picsum.photos](https://picsum.photos) at runtime, so those examples need an internet connection.
+The 3D graphics come from the embedded PNGs of the provided SVG files (`public/heart.png`, `public/shape-*.png`). Example 3 uses `public/ignite-phone.mp4`. The photo in example 6 (`src/examples/photo-reveal/photo.webp`) comes from noaignite.com and is bundled locally because its CDN sends no CORS headers. Photos in examples 1 and 4 are loaded from [picsum.photos](https://picsum.photos) at runtime, so those examples need an internet connection.
