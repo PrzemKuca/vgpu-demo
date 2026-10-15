@@ -48,3 +48,11 @@ html, body { margin: 0; height: 100%; background: #000; color: #ddd; font-family
 .chips { display: flex; flex-wrap: wrap; gap: 4px; }
 .chip { background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 999px; padding: 4px 10px; color: #aaa; font: inherit; font-size: 12px; cursor: pointer; }
 .chip.active { background: #FF46CD; border-color: #FF46CD; color: #000; }
+.button-scene { position: absolute; inset: 0; display: grid; place-items: center; background: #000; overflow: hidden; }
+.fx-trigger { width: min(440px, 80%); aspect-ratio: 16 / 10; display: grid; place-content: center; gap: 6px; text-align: center; border: 1px dashed #333; border-radius: 16px; background: #0a0a0a; color: #ddd; font-size: 20px; }
+.fx-trigger small { color: #666; font-size: 13px; }
+.fx-trigger:hover { border-color: #555; }
+.fx-tooltip { position: absolute; left: 0; top: 0; z-index: 3; pointer-events: none; will-change: transform; }
+.fx-tooltip canvas { display: block; width: 100%; height: 100%; }
+.photo-scene { position: absolute; inset: 0; display: grid; place-items: center; background: #000; overflow: hidden; container-type: size; }
+.photo-scene canvas { display: block; width: auto; }

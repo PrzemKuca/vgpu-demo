@@ -12,6 +12,7 @@ Interactive WebGPU demos built with [vgpu](https://vgpu.sh/docs) — a typed, ag
 | 2 | **3D graphic — gravity** | A flat PNG becomes an inflated 3D "pillow". Pillows fall, bounce, squash like soft bodies, stack on each other and can be dragged and thrown. Clicking fires a burst of hundreds of small hearts simulated on the GPU. Add/remove pillows, tune gravity, bounciness, friction, softness and thickness. | `draw` + `geometry` (depth, MSAA), `compute` + `storage` (GPU particles), instanced draws, `vgpu/scene` transforms |
 | 3 | **Video — backlight** | A video plays on a "TV" on a dark wall while an ambient backlight (like LED strips behind a TV) spills the frame's edge colours onto the wall, smoothed over time. | multi-pass `effect` chain, ping-pong `target`s |
 | 4 | **Scroll — depth parallax** | Scrolling flies the camera through a corridor of photos, graphics and headlines at different depths. Effect variants: Clean, Cinematic (depth of field + fog), Speed (zoom blur), Glitch, Print (brand halftone) — scroll-speed reactive. | instanced card `draw`s with premultiplied blending, offscreen `target` + post-processing `effect` |
+| 5 | **Button — liquid hover** | Hovering a card shows a button as a tooltip pinned to the cursor. The button keeps its rounded-rectangle shape while a pink energy wave sweeps across it and spills beyond it, leaving the white fill and label behind with a soft yellow glow at the seam; on leave the wave runs back. Manual progress slider, duration, glow and wobble controls. | `effect` on a transparent canvas, `@vgpu/wgsl-std/noise/simplex` |
 
 A small performance overlay (FPS, frame time, heap, GPU) sits in the bottom-right corner.
 
@@ -48,6 +49,7 @@ src/
     heart-drop/            2 · 3D pillows: mesh.ts (PNG → mesh), physics.ts, GPU heart burst
     video-led/             3 · video with ambient backlight
     scroll-depth/          4 · scroll-driven depth parallax with effect variants
+    button-hover/          5 · cursor tooltip button with an energy-wave reveal
 vite.config.ts             @vgpu/wgsl Vite plugin (compiles .wgsl imports at build time)
 ```
 
