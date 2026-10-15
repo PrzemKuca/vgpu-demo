@@ -1,0 +1,50 @@
+html, body { margin: 0; height: 100%; background: #000; color: #ddd; font-family: system-ui, sans-serif; }
+#app { display: flex; height: 100%; }
+.sidebar { display: flex; flex-direction: column; width: 220px; flex-shrink: 0; background: #111; border-right: 1px solid #222; overflow-y: auto; }
+.sidebar h1 { font-size: 16px; margin: 0; padding: 16px; }
+.sidebar ul { list-style: none; margin: 0; padding: 0 8px; }
+.sidebar a { display: block; padding: 8px 12px; border-radius: 6px; color: #aaa; text-decoration: none; font-size: 14px; }
+.sidebar a:hover { background: #1c1c1c; color: #fff; }
+.sidebar a.active { background: #262626; color: #fff; }
+.stage { flex: 1; position: relative; overflow: hidden; }
+.placeholder { color: #555; padding: 24px; margin: 0; }
+.stage { display: grid; place-items: center; }
+.smoke-hover { position: relative; width: min(720px, 90%); aspect-ratio: 3 / 2; cursor: pointer; }
+.smoke-hover canvas { position: absolute; display: block; pointer-events: none; z-index: 1; }
+.smoke-hover .hint { position: absolute; left: 0; right: 0; bottom: -32px; text-align: center; color: #555; font-size: 13px; margin: 0; }
+.controls { position: absolute; top: 16px; right: 16px; z-index: 2; width: 220px; padding: 14px; background: rgba(17, 17, 17, 0.92); border: 1px solid #262626; border-radius: 10px; font-size: 13px; display: grid; gap: 14px; }
+.controls h2 { margin: 0; font-size: 13px; font-weight: 600; color: #fff; }
+.controls .field { display: grid; gap: 6px; }
+.controls .label { display: flex; justify-content: space-between; color: #999; }
+.controls output { color: #fff; font-variant-numeric: tabular-nums; }
+.controls input[type=range] { width: 100%; accent-color: #FF46CD; }
+.controls .check { display: flex; align-items: center; gap: 8px; color: #ccc; cursor: pointer; }
+.controls .check input { accent-color: #FF46CD; }
+.segmented { display: grid; grid-template-columns: 1fr 1fr; background: #0a0a0a; border: 1px solid #262626; border-radius: 6px; padding: 2px; }
+.segmented button { background: none; border: 0; border-radius: 4px; padding: 6px; color: #999; font: inherit; cursor: pointer; }
+.segmented button.active { background: #262626; color: #fff; }
+.sidebar-links { margin-top: auto; padding: 12px 8px 16px; border-top: 1px solid #222; }
+.sidebar-links a { font-size: 13px; color: #777; }
+.heart-scene { position: absolute; inset: 0; }
+.heart-scene canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.heart-scene.grabbable canvas { cursor: grab; }
+.heart-scene.dragging canvas { cursor: grabbing; }
+.scene-hint { position: absolute; left: 0; right: 0; bottom: 20px; margin: 0; text-align: center; color: #555; font-size: 13px; pointer-events: none; }
+.controls .button { background: #262626; border: 1px solid #333; border-radius: 6px; padding: 8px; color: #fff; font: inherit; cursor: pointer; }
+.controls .button:hover { background: #303030; }
+.perf { position: fixed; right: 12px; bottom: 12px; z-index: 10; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; padding: 6px 8px; background: rgba(10, 10, 10, 0.8); border: 1px solid #222; border-radius: 6px; font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; color: #777; pointer-events: none; }
+.perf .fps { color: #E4FB00; font-weight: 600; }
+.perf .fps.warn { color: #FF46CD; }
+.controls .button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.controls .button:disabled { opacity: 0.4; cursor: default; }
+.video-scene { position: absolute; inset: 0; }
+.video-scene canvas { display: block; width: 100%; height: 100%; }
+.video-source { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.depth-scene { position: absolute; inset: 0; }
+.depth-scene canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.depth-scroller { position: absolute; inset: 0; overflow-y: auto; scrollbar-width: thin; }
+.depth-track { height: 900vh; }
+.depth-hint { transition: opacity 0.3s; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 999px; padding: 4px 10px; color: #aaa; font: inherit; font-size: 12px; cursor: pointer; }
+.chip.active { background: #FF46CD; border-color: #FF46CD; color: #000; }

@@ -1,0 +1,76 @@
+# vgpu demos
+
+Interactive WebGPU demos built with [vgpu](https://vgpu.sh/docs) — a typed, agent-first WebGPU library — and plain TypeScript + Vite. Each example lives in its own folder and is picked from the sidebar; every example has a controls panel so it can be driven live during a presentation.
+
+## Examples
+
+| # | Example | What it shows | vgpu features |
+|---|---------|---------------|---------------|
+| 1 | **Hover — smoke** | Hovering an image swaps it for another under a pink/yellow (`#FF46CD` / `#E4FB00`) gas cloud sweeping from bottom-left to top-right, spilling outside the image. A slider scrubs the transition by hand. | `effect`, `@vgpu/wgsl-std/noise/simplex` (domain-warped fBm) |
+| 2 | **3D graphic — gravity** | A flat PNG becomes an inflated 3D "pillow". Pillows fall, bounce, squash like soft bodies, stack on each other and can be dragged and thrown. Clicking fires a burst of hundreds of small hearts simulated on the GPU. Add/remove pillows, tune gravity, bounciness, friction, softness and thickness. | `draw` + `geometry` (depth, MSAA), `compute` + `storage` (GPU particles), instanced draws, `vgpu/scene` transforms |
+| 3 | **Video — backlight** | A video plays on a "TV" on a dark wall while an ambient backlight (like LED strips behind a TV) spills the frame's edge colours onto the wall, smoothed over time. | multi-pass `effect` chain, ping-pong `target`s |
+| 4 | **Scroll — depth parallax** | Scrolling flies the camera through a corridor of photos, graphics and headlines at different depths. Effect variants: Clean, Cinematic (depth of field + fog), Speed (zoom blur), Glitch, Print (brand halftone) — scroll-speed reactive. | instanced card `draw`s with premultiplied blending, offscreen `target` + post-processing `effect` |
+
+A small performance overlay (FPS, frame time, heap, GPU) sits in the bottom-right corner.
+
+## Requirements
+
+- Node.js 20+
+- A browser with WebGPU (recent Chrome, Edge, Arc, Safari 26+)
+
+## Getting started
+
+```bash
+npm install
+npm run dev
+```
+
+Open the printed URL (default http://localhost:5173). Other scripts:
+
+```bash
+npm run build     # type-check and build to dist/
+npm run preview   # serve the production build
+```
+
+## Project structure
+
+```
+public/                    static assets (images, video)
+src/
+  main.ts                  sidebar menu + hash router (#smoke-hover, #heart-drop, …)
+  perf.ts                  FPS / frame-time overlay
+  style.css
+  examples/
+    index.ts               list of examples shown in the menu
+    smoke-hover/           1 · hover image swap under a gas cloud
+    heart-drop/            2 · 3D pillows: mesh.ts (PNG → mesh), physics.ts, GPU heart burst
+    video-led/             3 · video with ambient backlight
+    scroll-depth/          4 · scroll-driven depth parallax with effect variants
+vite.config.ts             @vgpu/wgsl Vite plugin (compiles .wgsl imports at build time)
+```
+
+### Adding an example
+
+1. Create `src/examples/<name>/index.ts` exporting `mount(root: HTMLElement)`, which renders into `root` and returns a cleanup function (stop the frame loop, `gpu.dispose()`).
+2. Register it in `src/examples/index.ts` with an `id` (used as the URL hash) and a `title`.
+
+Shaders are plain `.wgsl` files imported directly (`import shader from './x.wgsl'`); the Vite plugin turns them into prepared vgpu shader sources. Validate one without a browser:
+
+```bash
+npx vgpu check src/examples/smoke-hover/smoke.wgsl
+```
+
+## Working with vgpu docs
+
+The vgpu package ships documentation versioned with the installed release:
+
+```bash
+npx vgpu                                  # guide and commands
+npx vgpu docs cat getting-started.md
+npx vgpu docs find "<topic or symbol>"
+npx vgpu examples search "<topic>"
+```
+
+## Assets
+
+The 3D graphics come from the embedded PNGs of the provided SVG files (`public/heart.png`, `public/shape-*.png`). Example 3 uses `public/ignite-phone.mp4`. Photos in examples 1 and 4 are loaded from [picsum.photos](https://picsum.photos) at runtime, so those examples need an internet connection.
