@@ -6,11 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "perf:lighthouse": "node scripts/lighthouse.mjs"
   },
   "devDependencies": {
     "@vgpu/wgsl": "^0.6.0",
     "@vgpu/wgsl-std": "^0.6.0",
+    "chrome-launcher": "^1.2.2",
+    "lighthouse": "^13.5.0",
+    "puppeteer-core": "^25.14.0",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
   },

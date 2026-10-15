@@ -2,11 +2,14 @@ import './style.css'
 import { examples } from './examples'
 import { mountPerfOverlay } from './perf'
 
+const link = (e: (typeof examples)[number]) => `<li><a href="#${e.id}" data-id="${e.id}">${e.title}</a></li>`
+
 const app = document.querySelector<HTMLDivElement>('#app')!
 app.innerHTML = `
   <nav class="sidebar">
     <h1>vgpu</h1>
-    <ul>${examples.map((e) => `<li><a href="#${e.id}" data-id="${e.id}">${e.title}</a></li>`).join('')}</ul>
+    <ul>${examples.filter((e) => !e.tool).map(link).join('')}</ul>
+    <ul class="sidebar-tools">${examples.filter((e) => e.tool).map(link).join('')}</ul>
     <footer class="sidebar-links">
       <a href="https://vgpu.sh/docs" target="_blank" rel="noopener">vgpu docs ↗</a>
       <a href="https://github.com/vercel-labs/vgpu" target="_blank" rel="noopener">GitHub ↗</a>
